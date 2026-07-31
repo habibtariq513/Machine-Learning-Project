@@ -1,0 +1,264 @@
+
+<h2 class="sr-only">MLflow experiment results dashboard for Fannie Mae Default Prediction — 5 runs showing metrics progression from baseline to best model</h2>
+
+<style>
+.db-wrap { font-family: var(--font-sans); padding: 1rem 0; }
+.section-label { font-size: 11px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--text-muted); margin: 1.5rem 0 .6rem; }
+.kpi-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 1.5rem; }
+.kpi { background: var(--surface-1); border-radius: var(--radius); padding: .75rem 1rem; }
+.kpi-label { font-size: 11px; color: var(--text-muted); margin-bottom: 4px; }
+.kpi-val { font-size: 22px; font-weight: 500; color: var(--text-primary); }
+.kpi-sub { font-size: 11px; color: var(--text-secondary); margin-top: 2px; }
+.kpi.best { border: 1.5px solid var(--border-accent); }
+.kpi.best .kpi-val { color: var(--text-accent); }
+.runs-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 1.5rem; }
+.run-card { background: var(--surface-1); border-radius: var(--radius); padding: .75rem; border: 0.5px solid var(--border); }
+.run-card.winner { border: 1.5px solid var(--border-accent); }
+.run-tag { display: inline-block; font-size: 10px; font-weight: 500; padding: 2px 7px; border-radius: 10px; margin-bottom: 6px; }
+.tag-baseline { background: var(--bg-warning); color: var(--text-warning); }
+.tag-selection { background: var(--bg-accent); color: var(--text-accent); }
+.tag-tuned { background: var(--bg-success); color: var(--text-success); }
+.tag-ensemble { background: var(--surface-0); color: var(--text-secondary); border: 0.5px solid var(--border-strong); }
+.tag-fe { background: var(--bg-danger); color: var(--text-danger); }
+.run-title { font-size: 12px; font-weight: 500; color: var(--text-primary); margin-bottom: 8px; line-height: 1.3; }
+.run-metric { display: flex; justify-content: space-between; align-items: center; font-size: 11px; padding: 2px 0; border-bottom: 0.5px solid var(--border); }
+.run-metric:last-child { border-bottom: none; }
+.m-key { color: var(--text-secondary); }
+.m-val { font-weight: 500; color: var(--text-primary); }
+.m-val.hi { color: var(--text-success); }
+.chart-wrap { position: relative; width: 100%; height: 220px; margin-bottom: 1rem; }
+.chart-wrap2 { position: relative; width: 100%; height: 200px; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 1.5rem; }
+.chart-card { background: var(--surface-1); border-radius: var(--radius); padding: .75rem 1rem; }
+.run2-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: 6px; margin-bottom: 1.5rem; }
+.r2c { background: var(--surface-1); border-radius: var(--radius); padding: .6rem .75rem; border: 0.5px solid var(--border); text-align: center; }
+.r2c.r2best { border: 1.5px solid var(--border-accent); }
+.r2-name { font-size: 10px; color: var(--text-secondary); margin-bottom: 4px; }
+.r2-auc { font-size: 16px; font-weight: 500; color: var(--text-primary); }
+.r2-f1 { font-size: 10px; color: var(--text-muted); }
+.ens-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; margin-bottom: 1.5rem; }
+.ec { background: var(--surface-1); border-radius: var(--radius); padding: .6rem .75rem; border: 0.5px solid var(--border); text-align: center; }
+.ec.ebest { border: 1.5px solid var(--border-accent); }
+.ec-name { font-size: 10px; color: var(--text-secondary); margin-bottom: 4px; }
+.ec-auc { font-size: 16px; font-weight: 500; color: var(--text-primary); }
+.params-box { background: var(--surface-1); border-radius: var(--radius); padding: .75rem 1rem; margin-bottom: 1.5rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.p-item { font-size: 11px; }
+.p-key { color: var(--text-muted); }
+.p-val { font-weight: 500; color: var(--text-primary); }
+.verdict { background: var(--bg-success); border-radius: 10px; padding: .75rem 1rem; display: flex; align-items: center; gap: 10px; margin-bottom: 1rem; }
+.verdict-icon { font-size: 20px; }
+.verdict-text { font-size: 13px; color: var(--text-success); font-weight: 500; }
+.legend-row { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 8px; font-size: 11px; color: var(--text-secondary); }
+.l-dot { width: 9px; height: 9px; border-radius: 2px; display: inline-block; margin-right: 4px; vertical-align: middle; }
+</style>
+
+<div class="db-wrap">
+
+<div class="section-label">🏆 best run summary — run 3</div>
+<div class="kpi-row">
+  <div class="kpi best">
+    <div class="kpi-label">ROC-AUC</div>
+    <div class="kpi-val">0.8924</div>
+    <div class="kpi-sub">+4.02% vs baseline</div>
+  </div>
+  <div class="kpi best">
+    <div class="kpi-label">Test accuracy</div>
+    <div class="kpi-val">80.52%</div>
+    <div class="kpi-sub">+2.4% vs baseline</div>
+  </div>
+  <div class="kpi best">
+    <div class="kpi-label">F1 score</div>
+    <div class="kpi-val">0.7548</div>
+    <div class="kpi-sub">+0.033 vs baseline</div>
+  </div>
+  <div class="kpi best">
+    <div class="kpi-label">Precision</div>
+    <div class="kpi-val">0.7596</div>
+    <div class="kpi-sub">+0.025 vs baseline</div>
+  </div>
+  <div class="kpi best">
+    <div class="kpi-label">Recall</div>
+    <div class="kpi-val">0.7500</div>
+    <div class="kpi-sub">+0.041 vs baseline</div>
+  </div>
+</div>
+
+<div class="section-label">all 5 mlflow runs at a glance</div>
+<div class="runs-grid">
+  <div class="run-card">
+    <div><span class="run-tag tag-baseline">Run 1</span></div>
+    <div class="run-title">Baseline<br>Logistic Regression</div>
+    <div class="run-metric"><span class="m-key">ROC-AUC</span><span class="m-val">0.8522</span></div>
+    <div class="run-metric"><span class="m-key">Accuracy</span><span class="m-val">78.12%</span></div>
+    <div class="run-metric"><span class="m-key">F1</span><span class="m-val">0.7214</span></div>
+    <div class="run-metric"><span class="m-key">Precision</span><span class="m-val">0.7344</span></div>
+    <div class="run-metric"><span class="m-key">Recall</span><span class="m-val">0.7089</span></div>
+  </div>
+  <div class="run-card">
+    <div><span class="run-tag tag-selection">Run 2</span></div>
+    <div class="run-title">Model Selection<br>5 algorithms</div>
+    <div class="run-metric"><span class="m-key">Best AUC</span><span class="m-val">0.8906</span></div>
+    <div class="run-metric"><span class="m-key">Winner</span><span class="m-val" style="font-size:10px">Grad.Boost</span></div>
+    <div class="run-metric"><span class="m-key">Accuracy</span><span class="m-val">80.39%</span></div>
+    <div class="run-metric"><span class="m-key">F1</span><span class="m-val">0.7512</span></div>
+    <div class="run-metric"><span class="m-key">Precision</span><span class="m-val">0.7622</span></div>
+  </div>
+  <div class="run-card winner">
+    <div><span class="run-tag tag-tuned">Run 3 ★</span></div>
+    <div class="run-title">Tuned XGBoost<br>RandomizedSearchCV</div>
+    <div class="run-metric"><span class="m-key">ROC-AUC</span><span class="m-val hi">0.8924</span></div>
+    <div class="run-metric"><span class="m-key">CV AUC</span><span class="m-val hi">0.8957</span></div>
+    <div class="run-metric"><span class="m-key">Accuracy</span><span class="m-val hi">80.52%</span></div>
+    <div class="run-metric"><span class="m-key">F1</span><span class="m-val hi">0.7548</span></div>
+    <div class="run-metric"><span class="m-key">Recall</span><span class="m-val hi">0.7500</span></div>
+  </div>
+  <div class="run-card">
+    <div><span class="run-tag tag-ensemble">Run 4</span></div>
+    <div class="run-title">Ensemble Learning<br>Bagging / Boosting</div>
+    <div class="run-metric"><span class="m-key">Best AUC</span><span class="m-val">0.8868</span></div>
+    <div class="run-metric"><span class="m-key">Winner</span><span class="m-val" style="font-size:10px">Bagging_DT</span></div>
+    <div class="run-metric"><span class="m-key">Accuracy</span><span class="m-val">80.14%</span></div>
+    <div class="run-metric"><span class="m-key">F1</span><span class="m-val">0.7447</span></div>
+    <div class="run-metric"><span class="m-key">Precision</span><span class="m-val">0.7659</span></div>
+  </div>
+  <div class="run-card">
+    <div><span class="run-tag tag-fe">Run 5</span></div>
+    <div class="run-title">FE + PCA + SMOTE<br>XGBoost</div>
+    <div class="run-metric"><span class="m-key">ROC-AUC</span><span class="m-val">0.8498</span></div>
+    <div class="run-metric"><span class="m-key">Accuracy</span><span class="m-val">76.47%</span></div>
+    <div class="run-metric"><span class="m-key">F1</span><span class="m-val">0.7207</span></div>
+    <div class="run-metric"><span class="m-key">PCA dims</span><span class="m-val">31→20</span></div>
+    <div class="run-metric"><span class="m-key">New feats</span><span class="m-val">6</span></div>
+  </div>
+</div>
+
+<div class="section-label">roc-auc & accuracy progression across runs</div>
+<div class="legend-row">
+  <span><span class="l-dot" style="background:#2a78d6"></span>ROC-AUC</span>
+  <span><span class="l-dot" style="background:#1baf7a"></span>Test Accuracy</span>
+</div>
+<div class="chart-wrap">
+  <canvas id="progressChart" role="img" aria-label="Line chart showing ROC-AUC and accuracy improving from Run 1 baseline through Run 3 best model">ROC-AUC: 0.85, 0.89, 0.89, 0.89, 0.85. Accuracy: 78%, 80%, 81%, 80%, 76%</canvas>
+</div>
+
+<div class="two-col">
+  <div class="chart-card">
+    <div class="section-label" style="margin-top:0">run 2 — model comparison (roc-auc)</div>
+    <div class="run2-grid">
+      <div class="r2c"><div class="r2-name">Decision Tree</div><div class="r2-auc">0.8288</div><div class="r2-f1">F1: 0.728</div></div>
+      <div class="r2c"><div class="r2-name">Random Forest</div><div class="r2-auc">0.8814</div><div class="r2-f1">F1: 0.741</div></div>
+      <div class="r2c"><div class="r2-name">XGBoost</div><div class="r2-auc">0.8708</div><div class="r2-f1">F1: 0.737</div></div>
+      <div class="r2c"><div class="r2-name">LightGBM</div><div class="r2-auc">0.8841</div><div class="r2-f1">F1: 0.749</div></div>
+      <div class="r2c r2best"><div class="r2-name">Grad. Boost ★</div><div class="r2-auc" style="color:var(--text-accent)">0.8906</div><div class="r2-f1">F1: 0.751</div></div>
+    </div>
+    <div class="chart-wrap2">
+      <canvas id="run2Chart" role="img" aria-label="Bar chart comparing ROC-AUC of 5 models in Run 2">Gradient Boost highest at 0.8906</canvas>
+    </div>
+  </div>
+  <div class="chart-card">
+    <div class="section-label" style="margin-top:0">run 4 — ensemble comparison (roc-auc)</div>
+    <div class="ens-grid">
+      <div class="ec ebest"><div class="ec-name">Bagging_DT ★</div><div class="ec-auc" style="color:var(--text-accent)">0.8868</div></div>
+      <div class="ec"><div class="ec-name">AdaBoost</div><div class="ec-auc">0.8850</div></div>
+      <div class="ec"><div class="ec-name">Soft Voting</div><div class="ec-auc">0.8836</div></div>
+      <div class="ec"><div class="ec-name">Stacking</div><div class="ec-auc">0.8853</div></div>
+    </div>
+    <div class="chart-wrap2">
+      <canvas id="ensChart" role="img" aria-label="Bar chart comparing ROC-AUC of 4 ensemble methods in Run 4">Bagging highest at 0.8868</canvas>
+    </div>
+  </div>
+</div>
+
+<div class="section-label">run 3 — best hyperparameters found (xgboost)</div>
+<div class="params-box">
+  <div class="p-item"><span class="p-key">n_estimators </span><span class="p-val">300</span></div>
+  <div class="p-item"><span class="p-key">max_depth </span><span class="p-val">3</span></div>
+  <div class="p-item"><span class="p-key">learning_rate </span><span class="p-val">0.05</span></div>
+  <div class="p-item"><span class="p-key">subsample </span><span class="p-val">0.7</span></div>
+  <div class="p-item"><span class="p-key">colsample_bytree </span><span class="p-val">0.9</span></div>
+  <div class="p-item"><span class="p-key">min_child_weight </span><span class="p-val">1</span></div>
+  <div class="p-item"><span class="p-key">gamma </span><span class="p-val">0</span></div>
+  <div class="p-item"><span class="p-key">reg_alpha </span><span class="p-val">0.1</span></div>
+  <div class="p-item"><span class="p-key">reg_lambda </span><span class="p-val">1</span></div>
+</div>
+
+<div class="verdict">
+  <span class="verdict-icon" aria-hidden="true"><i class="ti ti-trophy" style="font-size:18px"></i></span>
+  <span class="verdict-text">Best model: Tuned XGBoost (Run 3) — ROC-AUC 0.8924 | CV AUC 0.8957 | Accuracy 80.52% | F1 0.7548 — logged to MLflow ✓</span>
+</div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const isDark = matchMedia('(prefers-color-scheme: dark)').matches;
+const gridC = isDark ? '#2c2c2a' : '#e1e0d9';
+const tickC = isDark ? '#898781' : '#898781';
+const textC = isDark ? '#ffffff' : '#0b0b0b';
+
+const baseOpts = {
+  responsive: true, maintainAspectRatio: false,
+  plugins: { legend: { display: false }, tooltip: { mode: 'index', intersect: false } },
+  scales: {
+    x: { ticks: { color: tickC, font: { size: 11 } }, grid: { color: gridC } },
+    y: { ticks: { color: tickC, font: { size: 11 } }, grid: { color: gridC } }
+  }
+};
+
+new Chart(document.getElementById('progressChart'), {
+  type: 'line',
+  data: {
+    labels: ['Run 1\nBaseline LR','Run 2\nModel Select','Run 3\nTuned XGB','Run 4\nEnsemble','Run 5\nFE+PCA+SMOTE'],
+    datasets: [
+      { label: 'ROC-AUC', data: [0.8522, 0.8906, 0.8924, 0.8868, 0.8498],
+        borderColor: '#2a78d6', backgroundColor: 'rgba(42,120,214,0.08)',
+        borderWidth: 2.5, pointRadius: 5, pointBackgroundColor: '#2a78d6',
+        tension: 0.3, fill: true },
+      { label: 'Test Accuracy', data: [0.7812, 0.8039, 0.8052, 0.8014, 0.7647],
+        borderColor: '#1baf7a', backgroundColor: 'rgba(27,175,122,0.08)',
+        borderWidth: 2.5, pointRadius: 5, pointBackgroundColor: '#1baf7a',
+        borderDash: [5,3], tension: 0.3, fill: true }
+    ]
+  },
+  options: { ...baseOpts,
+    scales: {
+      x: { ticks: { color: tickC, font: { size: 10 }, maxRotation: 0 }, grid: { color: gridC } },
+      y: { min: 0.72, max: 0.92, ticks: { color: tickC, font: { size: 11 }, callback: v => v.toFixed(2) }, grid: { color: gridC } }
+    }
+  }
+});
+
+new Chart(document.getElementById('run2Chart'), {
+  type: 'bar',
+  data: {
+    labels: ['DT','RF','XGB','LGBM','GBM'],
+    datasets: [{ label: 'ROC-AUC',
+      data: [0.8288, 0.8814, 0.8708, 0.8841, 0.8906],
+      backgroundColor: ['#898781','#2a78d6','#2a78d6','#2a78d6','#1baf7a'],
+      borderRadius: 4 }]
+  },
+  options: { ...baseOpts,
+    scales: {
+      x: { ticks: { color: tickC, font: { size: 11 } }, grid: { display: false } },
+      y: { min: 0.8, ticks: { color: tickC, callback: v => v.toFixed(2) }, grid: { color: gridC } }
+    }
+  }
+});
+
+new Chart(document.getElementById('ensChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Bagging','AdaBoost','Soft Vote','Stacking'],
+    datasets: [{ label: 'ROC-AUC',
+      data: [0.8868, 0.8850, 0.8836, 0.8853],
+      backgroundColor: ['#1baf7a','#2a78d6','#2a78d6','#2a78d6'],
+      borderRadius: 4 }]
+  },
+  options: { ...baseOpts,
+    scales: {
+      x: { ticks: { color: tickC, font: { size: 11 } }, grid: { display: false } },
+      y: { min: 0.875, ticks: { color: tickC, callback: v => v.toFixed(4) }, grid: { color: gridC } }
+    }
+  }
+});
+</script>
